@@ -117,17 +117,17 @@ end
 
 local function once<K...>(connection: Connection<K...>, ...: K...)
     connection:Disconnect()
-    connection._callback(... :: any)
+    connection._callback(...)
 end
 local function parallel<K...>(connection: Connection<K...>, ...: K...)
     task.synchronize()
-    connection._callback(... :: any)
+    connection._callback(...)
     task.desynchronize()
 end
 local function onceparallel<K...>(connection: Connection<K...>, ...: K...)
     connection:Disconnect()
     task.synchronize()
-    connection._callback(... :: any)
+    connection._callback(...)
     task.desynchronize()
 end
 
