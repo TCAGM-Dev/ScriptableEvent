@@ -9,17 +9,17 @@ export type Connection<K...> = {
 }
 
 export type Signal<K...> = {
-    Connect: <K...>(self: Signal<K...>, callback: SignalCallback<K...>) -> Connection<K...>,
-    Once: <K...>(self: Signal<K...>, callback: SignalCallback<K...>) -> Connection<K...>,
-    ConnectParallel: <K...>(self: Signal<K...>, callback: SignalCallback<K...>) -> Connection<K...>,
-    OnceParallel: <K...>(self: Signal<K...>, callback: SignalCallback<K...>) -> Connection<K...>,
+    Connect: (self: Signal<K...>, callback: SignalCallback<K...>) -> Connection<K...>,
+    Once: (self: Signal<K...>, callback: SignalCallback<K...>) -> Connection<K...>,
+    ConnectParallel: (self: Signal<K...>, callback: SignalCallback<K...>) -> Connection<K...>,
+    OnceParallel: (self: Signal<K...>, callback: SignalCallback<K...>) -> Connection<K...>,
     _connections: {[Connection<K...>]: boolean},
     _disconnectCallback: (Connection<K...>) -> nil,
     _Destroy: () -> nil
 }
 
 export type ScriptableEvent<K...> = {
-    Fire: <K...>(self: ScriptableEvent<K...>, K...) -> nil,
+    Fire: (self: ScriptableEvent<K...>, K...) -> nil,
     Signal: Signal<K...>
 }
 
@@ -117,17 +117,17 @@ end
 
 local function once<K...>(connection: Connection<K...>, ...: K...)
     connection:Disconnect()
-    connection._callback(... :: any)
+    connection._callback(...)
 end
 local function parallel<K...>(connection: Connection<K...>, ...: K...)
     task.synchronize()
-    connection._callback(... :: any)
+    connection._callback(...)
     task.desynchronize()
 end
 local function onceparallel<K...>(connection: Connection<K...>, ...: K...)
     connection:Disconnect()
     task.synchronize()
-    connection._callback(... :: any)
+    connection._callback(...)
     task.desynchronize()
 end
 
